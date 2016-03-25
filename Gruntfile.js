@@ -5,9 +5,9 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     mangle: {
-                        except: ['jQuery'],
-                        sourceMap: true
+                        except: ['jQuery']
                     },
+                    sourceMap: true,
                     banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
                     '<%= grunt.template.today("yyyy-mm-dd") %> */\n' +
                     '/* Copyright 2016 (C) Yehya Awad */\n'
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
             }
         }
     });
-    
+
     // Load uglify
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
