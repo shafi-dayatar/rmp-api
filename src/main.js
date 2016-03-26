@@ -107,6 +107,13 @@
       // Scrapes the data & calls callback with professor data
       var scrape = function(html, callback) {
         var page = jQuery(html);
+
+        var comments = [];
+        // Scrape all comments
+        $("p.commentsParagraph", page).each(function(indx, elem) {
+          comments.push($(elem).text().trim());
+        });
+        // Create professor object
         var professor = {
           fname: $(priv.selectors.fname, page).text().trim(),
           lname: $(priv.selectors.lname, page).text().trim(),
@@ -114,6 +121,7 @@
           easiness: $(priv.selectors.easiness, page).text().trim(),
           help: $(priv.selectors.help, page).text().trim(),
           clarity: $(priv.selectors.clarity, page).text().trim(),
+          comments: comments,
           chili: $(priv.selectors.chili, page).attr("src")
             .replace("/assets/chilis/", "")
             .replace("-chili.png", "")
@@ -204,18 +212,12 @@
       });
     };
     priv.ajax = function(url, callback) {
-      $.ajaxPrefilter(function(options) {
-        if (options.crossDomain && jQuery.support.cors) {
-          var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
-          options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
-          //options.url = "http://cors.corsproxy.io/url=" + options.url;
-        }
+      $.post("https://still-island-94747.herokuapp.com/rmp", {
+        url: url
+      }, function(response) {
+        console.log(response);
+        callback(response);
       });
-      $.get(
-        url,
-        function(response) {
-          callback(response);
-        });
     };
     /* Search for professor on RMP */
     priv.search = function(query, url, callback) {
