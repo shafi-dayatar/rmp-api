@@ -1,13 +1,19 @@
 module.exports = function(grunt) {
 
-    var banner = '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-        '<%= grunt.template.today("yyyy-mm-dd") %> */\n' +
-        '/* GitHub <%= pkg.homepage %> */\n' +
-        '/* Copyright 2016 (C) Yehya Awad */\n\n';
+    var buildFiles = [
+        'node_modules/jquery/dist/jquery.min.js',
+        'node_modules/underscore/underscore-min.js',
+        'src/vendor/cors-bypass.js',
+        'src/main.js'
+    ];
 
     grunt.initConfig({
+        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+            '<%= grunt.template.today("yyyy-mm-dd") %> */\n' +
+            '/* GitHub <%= pkg.homepage %> */\n' +
+            '/* Copyright 2016 (C) Yehya Awad */\n\n',
         pkg: grunt.file.readJSON('package.json'),
-        // UglifyJS configuration
+        // UglifyJS
         uglify: {
             min: {
                 options: {
@@ -16,13 +22,10 @@ module.exports = function(grunt) {
                         regex: "dist/rmp-api.min.js"
                     },
                     sourceMap: true,
-                    banner: banner
+                    banner: "<%= banner %>",
                 },
                 files: {
-                    'dist/rmp-api.min.js': [
-                        'src/vendor/cors-bypass.js',
-                        'src/main.js'
-                    ]
+                    'dist/rmp-api.min.js': buildFiles
                 }
             },
             nonmin: {
@@ -31,16 +34,14 @@ module.exports = function(grunt) {
                     mangle: false,
                     beautify: true,
                     preserveComments: 'all',
-                    banner: banner
+                    banner: "<%= banner %>"
                 },
                 files: {
-                    'dist/rmp-api.js': [
-                        'src/vendor/cors-bypass.js',
-                        'src/main.js'
-                    ]
+                    'dist/rmp-api.js': buildFiles
                 }
             }
         },
+        // jshint
         jshint: {
             options: {
                 reporter: require('jshint-stylish'),
