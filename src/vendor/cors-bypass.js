@@ -1,7 +1,4 @@
 /**
- * Created by yehyaawad on 3/25/16.
- */
-/**
  * jQuery.ajax mid - CROSS DOMAIN AJAX
  * ---
  * @author James Padolsey (http://james.padolsey.com)
@@ -13,13 +10,13 @@
  * @info http://james.padolsey.com/javascript/cross-domain-requests-with-jquery/
  */
 
-jQuery.ajax = (function(_ajax){
+jQuery.ajax = (function(_ajax) {
 
   var protocol = location.protocol,
-      hostname = location.hostname,
-      exRegex = RegExp(protocol + '//' + hostname),
-      YQL = 'http' + (/^https/.test(protocol)?'s':'') + '://query.yahooapis.com/v1/public/yql?callback=?',
-      query = 'select * from html where url="{URL}" and xpath="*"';
+    hostname = location.hostname,
+    exRegex = RegExp(protocol + '//' + hostname),
+    YQL = 'http' + (/^https/.test(protocol) ? 's' : '') + '://query.yahooapis.com/v1/public/yql?callback=?',
+    query = 'select * from html where url="{URL}" and xpath="*"';
 
   function isExternal(url) {
     return !exRegex.test(url) && /:\/\//.test(url);
@@ -29,7 +26,7 @@ jQuery.ajax = (function(_ajax){
 
     var url = o.url;
 
-    if ( /get/i.test(o.type) && !/json/i.test(o.dataType) && isExternal(url) ) {
+    if (/get/i.test(o.type) && !/json/i.test(o.dataType) && isExternal(url)) {
 
       // Manipulate options so that JSONP-x request is made to YQL
 
@@ -40,8 +37,7 @@ jQuery.ajax = (function(_ajax){
         q: query.replace(
           '{URL}',
           url + (o.data ?
-          (/\?/.test(url) ? '&' : '?') + jQuery.param(o.data)
-            : '')
+            (/\?/.test(url) ? '&' : '?') + jQuery.param(o.data) : '')
         ),
         format: 'xml'
       };
@@ -53,7 +49,7 @@ jQuery.ajax = (function(_ajax){
         delete o.complete;
       }
 
-      o.success = (function(_success){
+      o.success = (function(_success) {
         return function(data) {
 
           if (_success) {
