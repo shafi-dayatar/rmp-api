@@ -3,7 +3,6 @@ module.exports = function(grunt) {
     var buildFiles = [
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/underscore/underscore-min.js',
-        'src/vendor/cors-bypass.js',
         'src/main.js'
     ];
 
