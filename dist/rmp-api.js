@@ -3708,16 +3708,16 @@
         priv.requestPage = function(url, callback) {
             var MAX_RETRIES = 3;
             var requestCount = 0;
-            var request = function(url) {
+            var request = function(reqUrl) {
                 if (requestCount < MAX_RETRIES) {
                     var data = {
-                        url: url
+                        url: reqUrl
                     };
                     $.ajax({
-                        url: "rmp-api-server.herokuapp.com/rmp",
+                        url: "https://rmp-api-server.herokuapp.com/rmp",
                         type: "POST",
                         crossorigin: true,
-                        data: JSON.stringify(data),
+                        data: data,
                         dataType: "text",
                         success: function(data) {
                             // Got page
@@ -3733,6 +3733,7 @@
                 }
                 requestCount += 1;
             };
+            request(url);
         };
         /* Search for professor on RMP */
         priv.search = function(query, url, callback) {

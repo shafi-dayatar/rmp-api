@@ -14,6 +14,11 @@
   var rmp = function(options) {
     var pub = {};
     var priv = {};
+    /* Search configuration */
+    priv.config = {
+      university: "",
+      campus: ""
+    };
     /* Selectors used for searching HTML */
     priv.selectors = {
       listing: ".listing.PROFESSOR",
@@ -81,7 +86,7 @@
         // When a name is passed as the argument
         if (typeof input === "string") {
           var name = input;
-          return priv.newQuery(priv.options.university, priv.options.campus, name);
+          return priv.newQuery(priv.config.university, priv.config.campus, name);
         }
         // When otherwise
         else {
@@ -93,7 +98,7 @@
             }
             // if name property exists
             else {
-              return priv.newQuery(priv.options.university, priv.options.campus, input.name);
+              return priv.newQuery(priv.config.university, priv.config.campus, input.name);
             }
           }
           else {
@@ -219,16 +224,16 @@
     priv.requestPage = function(url, callback) {
       var MAX_RETRIES = 3;
       var requestCount = 0;
-      var request = function(url) {
+      var request = function(reqUrl) {
         if (requestCount < MAX_RETRIES) {
           var data = {
-            "url": url
+            "url": reqUrl
           };
           $.ajax({
-            url: "rmp-api-server.herokuapp.com/rmp",
+            url: "https://rmp-api-server.herokuapp.com/rmp",
             type: "POST",
             crossorigin: true,
-            data: JSON.stringify(data),
+            data: data,
             dataType: 'text',
             success: function(data) {
               // Got page
@@ -245,6 +250,7 @@
         }
         requestCount += 1;
       };
+      request(url);
     };
     /* Search for professor on RMP */
     priv.search = function(query, url, callback) {
@@ -271,7 +277,7 @@
     };
 
     // Validate input
-    $.extend(priv.options, priv.options(options));
+    $.extend(priv.config, priv.options(options));
 
     return pub;
   };

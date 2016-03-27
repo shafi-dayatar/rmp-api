@@ -20,24 +20,47 @@ $ bower install rmp-api --save
 
 var rmp = require("rmp-api");
 
-// Get data for Banana Man on RateMyProfessor.com (first one listed on the search page)
-var bananaSu = rmp.get("Banana Man"); 
+var callback( professor ) {
+  console.log("Name: "+professor.fname+" "+professor.lname);
+  console.log("Quality: "+professor.quality);
+  console.log("Easiness: "+professor.easiness);
+  console.log("Helpfulness: "+professor.help);
+  console.log("Average Grade: "+professor.grade);
+};
 
-// Professor John Cena at Harvard University
-var johnCena = rmp.get({ name: "John Cena", university: "Harvard" });
+/* Creating Campus/University instance */
 
 // Create instance that only searches for Penn State professors
 var pennState = rmp("Pennsylvania State University");
 
-// Terry Blakney at Penn State
-var terryBlakney = pennState.get("Terry Blakney");
+// Erie campus
+var pennStateErie = pennState({campus: "Erie"});
 
-// Searching other Penn State campuses
-var naseemIbrahim = pennState.get({ name: "Naseem Ibrahim", campus: "Erie" });
+// University of California
+var uc = rmp("University of California");
 
-// Campus instance
+// Using both University and Campus
 var ucSanDiego = rmp({university: "University of California", campus: "San Diego"});
 
+// Adding a campus
+var ucLA = uc("Los Angeles");
+
+/* Searching for professsors */
+
+// Get data for Banana Man on RateMyProfessor.com (first one listed on the search page)
+rmp.get("Paul Lynch", callback); 
+
+// Professor John Cena at Harvard University
+rmp.get({ name: "John Cena", university: "Harvard" }, callback);
+
+// Terry Blakney at Penn State
+pennState.get("Terry Blakney", callback);
+
+// Searching other Penn State campuses
+pennState.get({ name: "Naseem Ibrahim", campus: "Erie" }, callback);
+
+// Searching for a professor at ucSanDiego
+ucSanDiego.get("Some guy", callback);
 ```
 
 ###Bower
