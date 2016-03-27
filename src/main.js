@@ -115,6 +115,7 @@
         });
         // Create professor object
         var professor = {
+          url: url,
           fname: $(priv.selectors.fname, page).text().trim(),
           lname: $(priv.selectors.lname, page).text().trim(),
           quality: $(priv.selectors.quality, page).text().trim(),
@@ -126,7 +127,6 @@
             .replace("/assets/chilis/", "")
             .replace("-chili.png", "")
         };
-        console.log(professor);
         if (typeof callback !== "function") {
           throw new Error("No or invalid callback provided.");
         }
@@ -135,7 +135,7 @@
         }
       };
       // Make request
-      priv.ajax(url, function(respText) {
+      priv.requestPage(url, function(respText) {
         scrape(respText, callback);
       });
     };
@@ -144,14 +144,15 @@
       var out = {};
       var names = [];
       if (name.includes(",")) {
+        name = name.toLowerCase();
         names = name.split(",");
-        out.last = names[0].trim();
-        out.first = names[1].trim();
+        out.last = names[0].trim().toLowerCase();
+        out.first = names[1].trim().toLowerCase();
       }
       else {
         names = name.split(" ");
-        out.first = names[0].trim();
-        out.last = names[1].trim();
+        out.first = names[0].trim().toLowerCase();
+        out.last = names[1].trim().toLowerCase();
       }
       out.full = out.first + out.last;
       return out;
@@ -161,6 +162,7 @@
       // Clean names
       var name1 = priv.parseName(_name1);
       var name2 = priv.parseName(_name2);
+      console.log("Matching: " + name1.full + " === " + name2.full);
       // Start searching for match
       if (name1.full === name2.full) {
         return true;
@@ -200,7 +202,6 @@
           priv.scrape(priv.urlFromListing(elem), callback);
           found = true;
         }
-        console.log("Not matched..");
       });
       professorList.each(function(indx, elem) {
         if (!found && priv.matches(query.name, priv.nameFromLisiting(elem), false)) {
@@ -208,27 +209,55 @@
           priv.scrape(priv.urlFromListing(elem), callback);
           found = true;
         }
-        console.log("Not matched..");
       });
+      if (found === false) {
+        // Could not find professor after scan
+        callback(null);
+      }
     };
-    priv.ajax = function(url, callback) {
-      $.post("https://still-island-94747.herokuapp.com/rmp", {
-        url: url
-      }, function(response) {
-        console.log(response);
-        callback(response);
-      });
+    /* Makes AJAX request to page and retrieves HTML */
+    priv.requestPage = function(url, callback) {
+      var MAX_RETRIES = 3;
+      var requestCount = 0;
+      var request = function(url) {
+        if (requestCount < MAX_RETRIES) {
+          var data = {
+            "url": url
+          };
+          $.ajax({
+            url: "https://still-island-94747.herokuapp.com/rmp",
+            type: "POST",
+            crossorigin: true,
+            data: JSON.stringify(data),
+            dataType: 'text',
+            success: function(data) {
+              // Got page
+              callback(data);
+            },
+            error: function(error) {
+              // Retry on fail
+              request(url, callback);
+            }
+          });
+        }
+        else {
+          callback(null);
+        }
+        requestCount += 1;
+      };
     };
     /* Search for professor on RMP */
     priv.search = function(query, url, callback) {
       console.log("Search url:");
       console.log(url);
-      jQuery.ajaxSetup({
-        scriptCharset: "utf-8", //or "ISO-8859-1"
-        contentType: "application/json; charset=utf-8"
-      });
-      priv.ajax(url, function(respText) {
-        priv.scan(query, respText, callback);
+      priv.requestPage(url, function(respText) {
+        if (respText === null) {
+          // Could not make request
+          callback(null);
+        }
+        else {
+          priv.scan(query, respText, callback);
+        }
       });
     };
     /* Get request (Just pretend..) to RateMyProfessors api */
@@ -242,7 +271,7 @@
     };
 
     // Validate input
-    _.extend(priv.options, priv.options(options));
+    $.extend(priv.options, priv.options(options));
 
     return pub;
   };
@@ -259,11 +288,11 @@
   // EXPORT
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
-      exports = module.exports = _.extend(rmp, rmp());
+      exports = module.exports = $.extend(rmp, rmp());
     }
-    exports.rmp = _.extend(rmp, rmp(""));
+    exports.rmp = $.extend(rmp, rmp(""));
   }
   else {
-    root.rmp = _.extend(rmp, rmp(""));
+    root.rmp = $.extend(rmp, rmp(""));
   }
 }).call(this);
