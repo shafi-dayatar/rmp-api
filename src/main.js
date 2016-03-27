@@ -225,7 +225,7 @@
             "url": url
           };
           $.ajax({
-            url: "https://still-island-94747.herokuapp.com/rmp",
+            url: "rmp-api-server.herokuapp.com/rmp",
             type: "POST",
             crossorigin: true,
             data: JSON.stringify(data),
