@@ -56,7 +56,7 @@
       // if no input
       if (typeof input === "undefined" || input === null) {
         input = "";
-        console.warn("Instantiating new rmp object without arguments. Please provide a university name.");
+        console.warn("Instantiating new rmp object without arguments.");
       }
       // if input is an object
       else if (typeof input === "object") {
