@@ -16,8 +16,7 @@
     var priv = {};
     /* Search configuration */
     priv.config = {
-      university: "",
-      campus: ""
+      location: "" // university/campus
     };
     /* Selectors used for searching HTML */
     priv.selectors = {
@@ -53,29 +52,35 @@
     };
     /* Validates constructor options & holds options as properties */
     priv.options = function(input) {
+      var out = {};
       // if no input
       if (typeof input === "undefined" || input === null) {
         input = "";
         console.warn("Instantiating new rmp object without arguments.");
+        return out;
       }
       // if input is an object
       else if (typeof input === "object") {
-        // University validation
-        input.university = typeof input.university === "undefined" ? "" : input.university;
-        input.university = input.university === null ? "" : input.university;
-        // Campus validation
-        input.campus = typeof input.campus === "undefined" ? "" : input.campus;
-        input.campus = input.campus === null ? "" : input.campus;
+        out = priv.config.location;
+        $.each(input, function(key, val) {
+          if (typeof val === "string") {
+            out.location += " ";
+            out.location += val;
+          }
+        });
+        return out;
       }
       // if invalid type input
       else if (typeof input !== "string") {
         throw new Error("Argument 1: Must be a String containing a university name.");
       }
-      // if a string
-      input = {
-        university: input
-      };
-      return input;
+      else {
+        // if a string
+        out = {
+          location: input
+        };
+        return out;
+      }
     };
     /* Validate and return options */
     priv.getOptionsAsQuery = function(input) {

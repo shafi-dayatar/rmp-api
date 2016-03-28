@@ -1,4 +1,4 @@
-/*! rmp-api - v0.0.1 - 2016-03-27 */
+/*! rmp-api - v0.0.1 - 2016-03-28 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
@@ -3528,6 +3528,10 @@
     var rmp = function(options) {
         var pub = {};
         var priv = {};
+        /* Search configuration */
+        priv.config = {
+            location: ""
+        };
         /* Selectors used for searching HTML */
         priv.selectors = {
             listing: ".listing.PROFESSOR",
@@ -3557,25 +3561,30 @@
         };
         /* Validates constructor options & holds options as properties */
         priv.options = function(input) {
+            var out = {};
             // if no input
             if (typeof input === "undefined" || input === null) {
                 input = "";
-                console.warn("Instantiating new rmp object without arguments. Please provide a university name.");
+                console.warn("Instantiating new rmp object without arguments.");
+                return out;
             } else if (typeof input === "object") {
-                // University validation
-                input.university = typeof input.university === "undefined" ? "" : input.university;
-                input.university = input.university === null ? "" : input.university;
-                // Campus validation
-                input.campus = typeof input.campus === "undefined" ? "" : input.campus;
-                input.campus = input.campus === null ? "" : input.campus;
+                out = priv.config.location;
+                $.each(input, function(key, val) {
+                    if (typeof val === "string") {
+                        out.location += " ";
+                        out.location += val;
+                    }
+                });
+                return out;
             } else if (typeof input !== "string") {
                 throw new Error("Argument 1: Must be a String containing a university name.");
+            } else {
+                // if a string
+                out = {
+                    location: input
+                };
+                return out;
             }
-            // if a string
-            input = {
-                university: input
-            };
-            return input;
         };
         /* Validate and return options */
         priv.getOptionsAsQuery = function(input) {
@@ -3585,7 +3594,7 @@
                 // When a name is passed as the argument
                 if (typeof input === "string") {
                     var name = input;
-                    return priv.newQuery(priv.options.university, priv.options.campus, name);
+                    return priv.newQuery(priv.config.university, priv.config.campus, name);
                 } else {
                     // When argument is an Object
                     if (typeof input === "object") {
@@ -3593,7 +3602,7 @@
                         if (typeof input.name === "undefined") {
                             throw new Error("Required option missing: name");
                         } else {
-                            return priv.newQuery(priv.options.university, priv.options.campus, input.name);
+                            return priv.newQuery(priv.config.university, priv.config.campus, input.name);
                         }
                     } else {
                         throw new Error("Argument type not recognized");
@@ -3758,7 +3767,7 @@
             priv.search(query, searchUrl, callback);
         };
         // Validate input
-        $.extend(priv.options, priv.options(options));
+        $.extend(priv.config, priv.options(options));
         return pub;
     };
     /**
