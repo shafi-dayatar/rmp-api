@@ -3542,7 +3542,8 @@
             chili: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.breakdown-wrapper > div:nth-child(3) > div > figure > img",
             easiness: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(3) > div.rating",
             clarity: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(2) > div.rating",
-            help: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(1) > div.rating"
+            help: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(1) > div.rating",
+            university: "#mainContent > div.right-panel > div.top-info-block > div.result-info > div.result-title > h2 > a"
         };
         /* Generates new query object */
         priv.newQuery = function(university, campus, name) {
@@ -3630,6 +3631,8 @@
                     help: $(priv.selectors.help, page).text().trim(),
                     clarity: $(priv.selectors.clarity, page).text().trim(),
                     comments: comments,
+                    grade: $(priv.selectors.grade, page).text().trim(),
+                    university: $(priv.selectors.university, page).text().trim(),
                     chili: $(priv.selectors.chili, page).attr("src").replace("/assets/chilis/", "").replace("-chili.png", "")
                 };
                 if (typeof callback !== "function") {

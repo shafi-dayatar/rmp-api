@@ -83,3 +83,6 @@ var bananaMan = rmp.get("Banana Man");
 
 // Everything else is the same...
 ```
+
+##Example
+Checkout this [fiddle](https://jsfiddle.net/tnxbj112/4/).
