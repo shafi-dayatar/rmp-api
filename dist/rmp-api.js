@@ -3723,7 +3723,7 @@
                         url: reqUrl
                     };
                     $.ajax({
-                        url: "https://rmp-api-server.herokuapp.com/rmp",
+                        url: "https://rmp-api-server.herokuapp.com/rmp/v1",
                         type: "POST",
                         crossorigin: true,
                         data: data,

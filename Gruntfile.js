@@ -24,7 +24,8 @@ module.exports = function(grunt) {
                     banner: "<%= banner %>",
                 },
                 files: {
-                    'dist/rmp-api.min.js': buildFiles
+                    'dist/rmp-api.min.js': buildFiles,
+                    '../rmp-api-server/cdn/rmp-api-<%= pkg.version %>.min.js': buildFiles
                 }
             },
             nonmin: {

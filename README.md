@@ -11,6 +11,10 @@ Bower
 ```
 $ bower install rmp-api --save
 ```
+CDN
+```
+<script src="https://rmp-api-server.herokuapp.com/cdn/rmp-api-0.0.1.min.js"></script>
+```
 
 ##Usage
 
