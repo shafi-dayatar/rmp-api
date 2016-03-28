@@ -60,17 +60,19 @@ module.exports = function(grunt) {
             main: {
                 files: [{
                     expand: true,
-                    src: 'dist/rmp-api.min.js',
+                    src: 'dist/rmp-api.min.js*',
                     dest: '../rmp-api-server/cdn/',
                     rename: function(dest, src) {
-                        return dest + "rmp-api-latest.min.js";
+                        return dest + src.replace("dist/rmp-api",
+                            "rmp-api-latest");
                     }
                 }, {
                     expand: true,
-                    src: 'dist/rmp-api.min.js',
+                    src: 'dist/rmp-api.min.js*',
                     dest: '../rmp-api-server/cdn/',
                     rename: function(dest, src) {
-                        return dest + "rmp-api-<%= pkg.version %>.min.js";
+                        return dest + src.replace("dist/rmp-api",
+                            "rmp-api-<%= pkg.version %>");
                     }
                 }],
             }
