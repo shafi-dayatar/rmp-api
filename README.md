@@ -13,7 +13,7 @@ $ bower install rmp-api --save
 ```
 CDN
 ```html
-<script src="https://rmp-api-server.herokuapp.com/cdn/rmp-api-0.0.1.min.js"></script>
+<script src="https://rmp-api-server.herokuapp.com/cdn/rmp-api-latest.min.js"></script>
 ```
 
 ##Usage
@@ -82,5 +82,4 @@ JS:
 var bananaMan = rmp.get("Banana Man");
 
 // Everything else is the same...
-
 ```

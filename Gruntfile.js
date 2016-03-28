@@ -24,8 +24,7 @@ module.exports = function(grunt) {
                     banner: "<%= banner %>",
                 },
                 files: {
-                    'dist/rmp-api.min.js': buildFiles,
-                    '../rmp-api-server/cdn/rmp-api-<%= pkg.version %>.min.js': buildFiles
+                    'dist/rmp-api.min.js': buildFiles
                 }
             },
             nonmin: {
@@ -56,7 +55,26 @@ module.exports = function(grunt) {
                 "src/*.js",
                 "src/vendor/*.js"
             ]
-        }
+        },
+        copy: {
+            main: {
+                files: [{
+                    expand: true,
+                    src: 'dist/rmp-api.min.js',
+                    dest: '../rmp-api-server/cdn/',
+                    rename: function(dest, src) {
+                        return dest + "rmp-api-latest.min.js";
+                    }
+                }, {
+                    expand: true,
+                    src: 'dist/rmp-api.min.js',
+                    dest: '../rmp-api-server/cdn/',
+                    rename: function(dest, src) {
+                        return dest + "rmp-api-<%= pkg.version %>.min.js";
+                    }
+                }],
+            }
+        },
     });
 
     // Load uglify
@@ -65,6 +83,9 @@ module.exports = function(grunt) {
     // Load jshint
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
+    // Load copy
+    grunt.loadNpmTasks('grunt-contrib-copy');
+
     // Default task
-    grunt.registerTask('default', ["jshint", 'uglify:min', "uglify:nonmin"]);
+    grunt.registerTask('default', ["jshint", 'uglify:min', "uglify:nonmin", "copy:main"]);
 };
