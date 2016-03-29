@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/rmp-api.svg)](https://badge.fury.io/js/rmp-api)
+
 # rmp-api
 A RateMyProfessor scraper that pretends to be the RMP API
 
