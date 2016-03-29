@@ -2,6 +2,7 @@ module.exports = function(grunt) {
 
     var buildFiles = [
         'node_modules/jquery/dist/jquery.min.js',
+        'node_modules/underscore/underscore-min.js',
         'src/main.js'
     ];
 
@@ -60,6 +61,16 @@ module.exports = function(grunt) {
             main: {
                 files: [{
                     expand: true,
+                    src: 'dist/rmp-api.js*',
+                    dest: './',
+                    rename: function(dest, src) {
+                        return "index.js";
+                    }
+                }],
+            },
+            release: {
+                files: [{
+                    expand: true,
                     src: 'dist/rmp-api.min.js*',
                     dest: '../rmp-api-server/cdn/',
                     rename: function(dest, src) {
@@ -87,10 +98,13 @@ module.exports = function(grunt) {
 
     // Load copy
     grunt.loadNpmTasks('grunt-contrib-copy');
-    
+
     // Load release
     grunt.loadNpmTasks('grunt-npm-release');
 
     // Default task
     grunt.registerTask('default', ["jshint", 'uglify:min', "uglify:nonmin", "copy:main"]);
+
+    // Release task
+    grunt.registerTask('release', ["jshint", 'uglify:min', "uglify:nonmin", "copy"]);
 };

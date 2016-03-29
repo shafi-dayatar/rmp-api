@@ -1,8 +1,27 @@
-/*global jQuery, _*/
+/*global*/
 
 (function() {
 
   "use strict";
+
+  var request, cheerio,
+    jQuery = this.jQuery,
+    $ = this.$,
+    _ = this._;
+
+  /* Check for Node.js */
+  var IS_NODE = false;
+  if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+      IS_NODE = true;
+      // Get dependencies
+      request = require("request");
+      cheerio = require("cheerio");
+      jQuery = require("cheerio");
+      $ = require("cheerio");
+      _ = require("underscore");
+    }
+  }
 
   var root = this;
   var prevRmp = root.rmp;
@@ -174,7 +193,6 @@
       // Clean names
       var name1 = priv.parseName(_name1);
       var name2 = priv.parseName(_name2);
-      console.log("Matching: " + name1.full + " === " + name2.full);
       // Start searching for match
       if (name1.full === name2.full) {
         return true;
@@ -210,14 +228,12 @@
       var found = false;
       professorList.each(function(indx, elem) {
         if (!found && priv.matches(query.name, priv.nameFromLisiting(elem), true)) {
-          console.log("Matched");
           priv.scrape(priv.urlFromListing(elem), callback);
           found = true;
         }
       });
       professorList.each(function(indx, elem) {
         if (!found && priv.matches(query.name, priv.nameFromLisiting(elem), false)) {
-          console.log("Matched");
           priv.scrape(priv.urlFromListing(elem), callback);
           found = true;
         }
@@ -231,38 +247,50 @@
     priv.requestPage = function(url, callback) {
       var MAX_RETRIES = 3;
       var requestCount = 0;
-      var request = function(reqUrl) {
+      var getPage = function(reqUrl) {
         if (requestCount < MAX_RETRIES) {
           var data = {
             "url": reqUrl
           };
-          $.ajax({
-            url: "https://rmp-api-server.herokuapp.com/rmp/v1",
-            type: "POST",
-            crossorigin: true,
-            data: data,
-            dataType: 'text',
-            success: function(data) {
-              // Got page
-              callback(data);
-            },
-            error: function(error) {
-              // Retry on fail
-              request(url, callback);
-            }
-          });
+          if (!IS_NODE) {
+            $.ajax({
+              url: "https://rmp-api-server.herokuapp.com/rmp/v1",
+              type: "POST",
+              crossorigin: true,
+              data: data,
+              dataType: 'text',
+              success: function(data) {
+                // Got page
+                callback(data);
+              },
+              error: function(error) {
+                // Retry on fail
+                getPage(url, callback);
+              }
+            });
+          }
+          else {
+            request(data.url, function(error, response, body) {
+              if (!error && response.statusCode == 200) {
+                // Got page
+                callback(body);
+              }
+              else {
+                // Retry on fail
+                getPage(url, callback);
+              }
+            });
+          }
         }
         else {
           callback(null);
         }
         requestCount += 1;
       };
-      request(url);
+      getPage(url);
     };
     /* Search for professor on RMP */
     priv.search = function(query, url, callback) {
-      console.log("Search url:");
-      console.log(url);
       priv.requestPage(url, function(respText) {
         if (respText === null) {
           // Could not make request
@@ -284,7 +312,7 @@
     };
 
     // Validate input
-    $.extend(priv.config, priv.options(options));
+    _.extend(priv.config, priv.options(options));
 
     return pub;
   };
@@ -301,11 +329,11 @@
   // EXPORT
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
-      exports = module.exports = $.extend(rmp, rmp());
+      exports = module.exports = _.extend(rmp, rmp());
     }
-    exports.rmp = $.extend(rmp, rmp(""));
+    exports.rmp = _.extend(rmp, rmp(""));
   }
   else {
-    root.rmp = $.extend(rmp, rmp(""));
+    root.rmp = _.extend(rmp, rmp(""));
   }
 }).call(this);

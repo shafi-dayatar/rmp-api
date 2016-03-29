@@ -1,13 +1,13 @@
 {
   "name": "rmp-api",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A RateMyProfessor scraper that pretends to be an API",
   "main": "dist/rmp-api.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/nodetest.js"
   },
   "repository": {
     "type": "git",
@@ -38,7 +38,9 @@
     "jshint-stylish": "^2.1.0"
   },
   "dependencies": {
+    "cheerio": "^0.20.0",
     "jquery": "^2.2.2",
+    "request": "^2.69.0",
     "underscore": "^1.8.3"
   }
 }
