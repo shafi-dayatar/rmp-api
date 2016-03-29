@@ -329,7 +329,7 @@
   // EXPORT
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
-      exports = module.exports = _.extend(rmp, rmp());
+      exports = module.exports = _.extend(rmp, rmp(""));
     }
     exports.rmp = _.extend(rmp, rmp(""));
   }

@@ -1,4 +1,4 @@
-/*! rmp-api - v0.0.5 - 2016-03-29 */
+/*! rmp-api - v0.0.7 - 2016-03-29 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
@@ -3805,7 +3805,7 @@
     // EXPORT
     if (typeof exports !== "undefined") {
         if (typeof module !== "undefined" && module.exports) {
-            exports = module.exports = _.extend(rmp, rmp());
+            exports = module.exports = _.extend(rmp, rmp(""));
         }
         exports.rmp = _.extend(rmp, rmp(""));
     } else {
