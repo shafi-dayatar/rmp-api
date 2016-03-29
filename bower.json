@@ -1,0 +1,27 @@
+{
+  "name": "rmp-api",
+  "description": "A RateMyProfessor scraper that pretends to be an API",
+  "main": "dist/rmp-api.min.js",
+  "authors": [
+    "Yehya <yehyaawad.kip@gmail.com> (http://yehyaawad.com/)"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "ratemyprofessor",
+    "rate",
+    "my",
+    "professor",
+    "api",
+    "scraper",
+    "scrape"
+  ],
+  "homepage": "https://github.com/awadYehya/rmp-api",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

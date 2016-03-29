@@ -12,6 +12,7 @@ module.exports = function(grunt) {
             '/* GitHub <%= pkg.homepage %> */\n' +
             '/* Copyright 2016 (C) Yehya Awad */\n\n',
         pkg: grunt.file.readJSON('package.json'),
+        version: grunt.file.readJSON('package.json').version,
         // UglifyJS
         uglify: {
             min: {
@@ -87,6 +88,9 @@ module.exports = function(grunt) {
 
     // Load copy
     grunt.loadNpmTasks('grunt-contrib-copy');
+    
+    // Load release
+    grunt.loadNpmTasks('grunt-npm-release');
 
     // Default task
     grunt.registerTask('default', ["jshint", 'uglify:min', "uglify:nonmin", "copy:main"]);
