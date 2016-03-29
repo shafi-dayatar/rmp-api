@@ -24,7 +24,7 @@ CDN
 
 var rmp = require("rmp-api");
 
-var callback( professor ) {
+var callback = function( professor ) {
   console.log("Name: "+professor.fname+" "+professor.lname);
   console.log("Quality: "+professor.quality);
   console.log("Easiness: "+professor.easiness);
@@ -79,10 +79,10 @@ JS:
 ```javascript
 
 // rmp global is exposed for use
-var bananaMan = rmp.get("Banana Man");
+rmp.get("Banana Man", callback);
 
 // Everything else is the same...
 ```
 
 ##Example
-Checkout this [fiddle](https://jsfiddle.net/tnxbj112/4/).
+Checkout this [fiddle](https://jsfiddle.net/tnxbj112/5/).
