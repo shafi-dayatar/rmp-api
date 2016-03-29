@@ -113,14 +113,14 @@ pennState.get("Naseem Ibrahim", callback);
 
 Requesting professor
 
-**.get(fullName)**
+**.get(fullName, callback)**
 ```javascript
-rmp.get("Paul Lynch");
+rmp.get("Paul Lynch", callback);
 ```
 
-**.get(options)**
+**.get(options, callback)**
 ```javascript
-rmp.get({ university: "Pennsylvania State University", campus: "Erie", name: "Douglas Dexter"});
+rmp.get({ university: "Pennsylvania State University", campus: "Erie", name: "Douglas Dexter"}, callback);
 ```
 
 ##Example
