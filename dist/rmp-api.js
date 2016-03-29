@@ -1,4 +1,4 @@
-/*! rmp-api - v0.0.3 - 2016-03-29 */
+/*! rmp-api - v0.0.5 - 2016-03-29 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
@@ -3583,7 +3583,7 @@
                 console.warn("Instantiating new rmp object without arguments.");
                 return out;
             } else if (typeof input === "object") {
-                out = priv.config.location;
+                out.location = priv.config.location;
                 $.each(input, function(key, val) {
                     if (typeof val === "string") {
                         out.location += " ";
@@ -3592,11 +3592,11 @@
                 });
                 return out;
             } else if (typeof input !== "string") {
-                throw new Error("Argument 1: Must be a String containing a university name.");
+                throw new Error("Argument 1: Must be a String containing a university or campus name.");
             } else {
                 // if a string
                 out = {
-                    location: input
+                    location: priv.config.location + " " + input
                 };
                 return out;
             }
@@ -3682,7 +3682,6 @@
             // Clean names
             var name1 = priv.parseName(_name1);
             var name2 = priv.parseName(_name2);
-            console.log("Matching: " + name1.full + " === " + name2.full);
             // Start searching for match
             if (name1.full === name2.full) {
                 return true;
@@ -3713,14 +3712,12 @@
             var found = false;
             professorList.each(function(indx, elem) {
                 if (!found && priv.matches(query.name, priv.nameFromLisiting(elem), true)) {
-                    console.log("Matched");
                     priv.scrape(priv.urlFromListing(elem), callback);
                     found = true;
                 }
             });
             professorList.each(function(indx, elem) {
                 if (!found && priv.matches(query.name, priv.nameFromLisiting(elem), false)) {
-                    console.log("Matched");
                     priv.scrape(priv.urlFromListing(elem), callback);
                     found = true;
                 }
@@ -3775,8 +3772,6 @@
         };
         /* Search for professor on RMP */
         priv.search = function(query, url, callback) {
-            console.log("Search url:");
-            console.log(url);
             priv.requestPage(url, function(respText) {
                 if (respText === null) {
                     // Could not make request

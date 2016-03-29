@@ -81,7 +81,7 @@
       }
       // if input is an object
       else if (typeof input === "object") {
-        out = priv.config.location;
+        out.location = priv.config.location;
         $.each(input, function(key, val) {
           if (typeof val === "string") {
             out.location += " ";
@@ -92,12 +92,12 @@
       }
       // if invalid type input
       else if (typeof input !== "string") {
-        throw new Error("Argument 1: Must be a String containing a university name.");
+        throw new Error("Argument 1: Must be a String containing a university or campus name.");
       }
       else {
         // if a string
         out = {
-          location: input
+          location: priv.config.location + " " + input
         };
         return out;
       }
