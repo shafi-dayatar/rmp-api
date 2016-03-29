@@ -84,7 +84,7 @@ var callback = function(professor) {
 };
 
 // rmp global is exposed for use
-rmp.get("Paul Lynch", callback);
+rmp.get("Douglas Dexter", callback);
 ```
 Output:
 ```
