@@ -1,4 +1,4 @@
-/*! rmp-api - v0.0.7 - 2016-03-29 */
+/*! rmp-api - v0.0.7 - 2016-03-30 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
@@ -3792,7 +3792,7 @@
         };
         // Validate input
         _.extend(priv.config, priv.options(options));
-        return pub;
+        return _.extend(rmp, pub);
     };
     /**
    * Use to return to original 'rmp' variable

@@ -314,7 +314,7 @@
     // Validate input
     _.extend(priv.config, priv.options(options));
 
-    return pub;
+    return _.extend(rmp, pub);
   };
 
   /**
