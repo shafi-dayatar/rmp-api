@@ -48,7 +48,11 @@
       easiness: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(3) > div.rating",
       clarity: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(2) > div.rating",
       help: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(1) > div.rating",
-      university: "#mainContent > div.right-panel > div.top-info-block > div.result-info > div.result-title > h2 > a"
+      university: "#mainContent > div.right-panel > div.top-info-block > div.result-info > div.result-title > h2 > a",
+      // top tag of a professor
+      topTag: "#mainContent > div.right-panel > div.rating-breakdown > div.right-breakdown > div.tag-box > span:nth-child(1)",
+      // first tag of every comment
+      commentTags: "td.comments > div.tagbox > span:nth-child(1)"
     };
     /* Generates new query object */
     priv.newQuery = function(university, campus, name) {
