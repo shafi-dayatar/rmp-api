@@ -121,10 +121,22 @@ Requesting professor
 ```javascript
 rmp.get("Paul Lynch", callback);
 ```
+or
+```javascript
+var someUniv = rmp("Some University");
+
+someUniv.get("First Last", callback);
+```
 
 **.get(options, callback)**
 ```javascript
 rmp.get({ university: "Pennsylvania State University", campus: "Erie", name: "Douglas Dexter"}, callback);
+```
+or
+```javascript
+var someUniv = rmp("Some University");
+
+someUniv.get({ campus: "Some Campus", name: "First Last"}, callback);
 ```
 
 ##Example
