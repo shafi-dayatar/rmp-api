@@ -129,3 +129,6 @@ rmp.get({ university: "Pennsylvania State University", campus: "Erie", name: "Do
 
 ##Example
 Checkout this [fiddle](https://jsfiddle.net/tnxbj112/5/).
+
+##Sample Projects
+[PSU Rate My Professor Plugin](https://chrome.google.com/webstore/detail/psu-rate-my-professor-plu/mgcgmhhcjfknhchpfnkfhkoemaglookl?hl=en-US&gl=US&authuser=0)
