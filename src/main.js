@@ -49,6 +49,8 @@
       clarity: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(2) > div.rating",
       help: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(1) > div.rating",
       university: "#mainContent > div.right-panel > div.top-info-block > div.result-info > div.result-title > h2 > a",
+      // every comment
+      comments: "p.commentsParagraph",
       // top tag of a professor
       topTag: "#mainContent > div.right-panel > div.rating-breakdown > div.right-breakdown > div.tag-box > span:nth-child(1)",
       // first tag of every comment
@@ -140,10 +142,16 @@
     priv.scrape = function(url, callback) {
       // Scrapes the data & calls callback with professor data
       var scrape = function(html, callback) {
+        // Page built from HTML string
         var page = jQuery(html);
         var comments = [];
-        // Scrape all comments
-        $("p.commentsParagraph", page).each(function(indx, elem) {
+        var tags = [];
+        // Scrape all tags
+        $(priv.selectors.commentTags, page).each(function(indx, elem) {
+            tags.push($(elem).text().trim());
+          })
+          // Scrape all comments
+        $(priv.selectors.comments, page).each(function(indx, elem) {
           comments.push($(elem).text().trim());
         });
         // Create professor object
@@ -155,12 +163,14 @@
           easiness: $(priv.selectors.easiness, page).text().trim(),
           help: $(priv.selectors.help, page).text().trim(),
           clarity: $(priv.selectors.clarity, page).text().trim(),
-          comments: comments,
+          topTag: $(priv.selectors.topTag, page).text().trim(),
           grade: $(priv.selectors.grade, page).text().trim(),
           university: $(priv.selectors.university, page).text().trim(),
           chili: $(priv.selectors.chili, page).attr("src")
             .replace("/assets/chilis/", "")
-            .replace("-chili.png", "")
+            .replace("-chili.png", ""),
+          tags: tags,
+          comments: comments,
         };
         if (typeof callback !== "function") {
           throw new Error("No or invalid callback provided.");
