@@ -14,28 +14,30 @@ var callback = function(professor) {
   console.log("");
 };
 
-rmp.get("David Brown", callback);
+// rmp.get("David Brown", callback);
 
-// rmp.get("Naseem Ibrahim", callback);
+// // rmp.get("Naseem Ibrahim", callback);
 
-var ps = rmp("Pennsylvania State University");
+// var ps = rmp("Pennsylvania State University");
 
-// ps.get("Naseem Ibrahim", callback);
+// // ps.get("Naseem Ibrahim", callback);
 
-rmp("Pennsylvania State University").get("Jalaa Hoblos", callback);
+// rmp("Pennsylvania State University").get("Jalaa Hoblos", callback);
 
-ps.get("Meng Su", callback);
+// ps.get("Meng Su", callback);
 
-ps.get("David Browm", callback);
+// ps.get("David Browm", callback);
 
-var erie = ps("Erie");
-var harris = ps("Harrisburg");
+// var erie = ps("Erie");
+// var harris = ps("Harrisburg");
 
 
-erie.get("Naseem Ibrahim", callback);
+// erie.get("Naseem Ibrahim", callback);
 
-harris.get("Sukmoon Chang", callback);
+// harris.get("Sukmoon Chang", callback);
 
-var harrisAdd = harris("Add");
+// var harrisAdd = harris("Add");
 
-harrisAdd.get("Someone Else", callback);
+// harrisAdd.get("Someone Else", callback);
+
+rmp("Pennsylvania State University")("Erie").get("Naseem Ibrahim", callback);

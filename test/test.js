@@ -63,7 +63,11 @@ describe('rmp', function() {
       });
     });
   });
-
+  
+  ///////////////////////
+  // Instance creation //
+  ///////////////////////
+  
   describe("pennState = rmp('Pennsylvania State University');", function() {
     var rmp = require("../src/main.js");
     var pennState = rmp("Pennsylvania State University");
@@ -86,6 +90,47 @@ describe('rmp', function() {
           expect(professor).to.be.null;
           done();
         });
+      });
+    });
+  });
+  describe("var erie = rmp('Pennsylvania State University')('Erie');", function() {
+    var erie = rmp("Pennsylvania State University")("Erie");
+    it("should be a function", function() {
+      expect(erie).to.be.a("function");
+    });
+    it("should have a function property get", function() {
+      expect(erie).to.have.property("get");
+      expect(erie.get).to.be.a("function");
+    });
+    it("should find Jalaa Hoblos", function(done) {
+      erie.get("Jalaa Hoblos", function(professor) {
+        expect(professor).to.not.be.null;
+        expect(professor.fname).to.equal("Jalaa");
+        done();
+      });
+    });
+    it("should not find Sukmoon Chang", function(done) {
+      erie.get("Sukmoon Chang", function(professor) {
+        expect(professor).to.be.null;
+        done();
+      });
+    });
+  });
+  describe("rmp('Pennsylvania State University')('Harrisburg').get(...);", function() {
+    it("should be a function", function() {
+      expect(rmp('Pennsylvania State University')('Harrisburg').get).to.be.a("function");
+    });
+    it("should not find Jalaa Hoblos", function(done) {
+      rmp('Pennsylvania State University')('Harrisburg').get("Jalaa Hoblos", function(professor) {
+        expect(professor).to.be.null;
+        done();
+      });
+    });
+    it("should find Sukmoon Chang", function(done) {
+      rmp('Pennsylvania State University')('Harrisburg').get("Sukmoon Chang", function(professor) {
+        expect(professor).to.not.be.null;
+        expect(professor.fname).to.equal("Sukmoon");
+        done();
       });
     });
   });
