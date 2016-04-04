@@ -1,13 +1,13 @@
 {
   "name": "rmp-api",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A RateMyProfessor scraper that pretends to be an API",
   "main": "dist/rmp-api.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "node test/nodetest.js"
+    "test": "mocha ./test/test.js"
   },
   "repository": {
     "type": "git",
@@ -29,13 +29,16 @@
   },
   "homepage": "https://github.com/awadYehya/rmp-api#readme",
   "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
     "grunt": "0.4.5",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jshint": "1.0.0",
     "grunt-contrib-uglify": "1.0.1",
     "grunt-contrib-watch": "1.0.0",
     "grunt-npm-release": "0.0.2",
-    "jshint-stylish": "^2.1.0"
+    "jshint-stylish": "^2.1.0",
+    "mocha": "^2.4.5"
   },
   "dependencies": {
     "cheerio": "^0.20.0",

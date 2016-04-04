@@ -4,7 +4,7 @@
 
   "use strict";
 
-  var request, cheerio,
+  var request,
     jQuery = this.jQuery,
     $ = this.$,
     _ = this._;
@@ -16,7 +16,6 @@
       IS_NODE = true;
       // Get dependencies
       request = require("request");
-      cheerio = require("cheerio");
       jQuery = require("cheerio");
       $ = require("cheerio");
       _ = require("underscore");
@@ -31,6 +30,8 @@
    *
    */
   var rmp = function(options) {
+    // Binded object
+    var _this = this;
     var pub = {};
     var priv = {};
     /* Search configuration */
@@ -66,15 +67,30 @@
         name: name
       };
     };
+    /* Combines all properties of a string */
+    priv.combine = function(options) {
+      var query = "";
+      if (typeof options === "string") {
+        query = options;
+        return query;
+      }
+      else if (typeof options === "object") {
+        $.each(options, function(key, val) {
+          query += " ";
+          query += val;
+        });
+        return query;
+      }
+      else {
+        throw new Error("Please pass in a String name or object with correct property keys.");
+      }
+    };
     /* Generates a search URL for the professor */
-    priv.getSearchUrl = function(query) {
-      var campusSep = query.campus.length > 1 ? encodeURIComponent(" ") : "";
-      return "http://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=" +
-        encodeURIComponent(query.university) +
-        campusSep +
-        encodeURIComponent(query.campus) +
-        "&schoolID=4002&query=" +
-        encodeURIComponent(query.name);
+    priv.getSearchUrl = function(options) {
+      var query = priv.combine(options);
+      return "http://www.ratemyprofessors.com/search.jsp?query=" +
+        encodeURIComponent(priv.config.location) + encodeURIComponent(" ") +
+        encodeURIComponent(query);
     };
     /* Validates constructor options & holds options as properties */
     priv.options = function(input) {
@@ -148,9 +164,9 @@
         var tags = [];
         // Scrape all tags
         $(priv.selectors.commentTags, page).each(function(indx, elem) {
-            tags.push($(elem).text().trim());
-          })
-          // Scrape all comments
+          tags.push($(elem).text().trim());
+        });
+        // Scrape all comments
         $(priv.selectors.comments, page).each(function(indx, elem) {
           comments.push($(elem).text().trim());
         });
@@ -320,16 +336,40 @@
       // Generate a query using the options
       var query = priv.getOptionsAsQuery(options);
       // Get the search URL
-      var searchUrl = priv.getSearchUrl(query);
+      var searchUrl = priv.getSearchUrl(options);
       // Let the hunt begin
       priv.search(query, searchUrl, callback);
     };
+    /* Get the context of the search */
+    pub.getContext = function() {
+      return priv.config.location;
+    };
+    
+    // Initialize
+    priv.config.location = _this.context;
 
     // Validate input
     _.extend(priv.config, priv.options(options));
 
-    return _.extend(rmp, pub);
+    // Bind variable
+    var exportBind = {
+      context: pub.getContext()
+    };
+
+    // Bind context to function
+    var binded = _.bind(rmp, exportBind);
+
+    // Function + public properties
+    priv.export = _.extend(binded, pub);
+
+    // Export
+    return priv.export;
   };
+
+  // Initial bind of rmp
+  var rmp_export = _.bind(rmp, {
+    context: ""
+  });
 
   /**
    * Use to return to original 'rmp' variable
@@ -343,11 +383,11 @@
   // EXPORT
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
-      exports = module.exports = _.extend(rmp, rmp(""));
+      exports = module.exports = rmp_export("");
     }
-    exports.rmp = _.extend(rmp, rmp(""));
+    exports.rmp = rmp_export("");
   }
   else {
-    root.rmp = _.extend(rmp, rmp(""));
+    root.rmp = rmp_export("");
   }
 }).call(this);

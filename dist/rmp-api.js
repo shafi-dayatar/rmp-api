@@ -1,4 +1,4 @@
-/*! rmp-api - v0.0.7 - 2016-03-30 */
+/*! rmp-api - v0.0.9 - 2016-04-04 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
@@ -3519,7 +3519,7 @@
 /*global*/
 (function() {
     "use strict";
-    var request, cheerio, jQuery = this.jQuery, $ = this.$, _ = this._;
+    var request, jQuery = this.jQuery, $ = this.$, _ = this._;
     /* Check for Node.js */
     var IS_NODE = false;
     if (typeof exports !== "undefined") {
@@ -3527,7 +3527,6 @@
             IS_NODE = true;
             // Get dependencies
             request = require("request");
-            cheerio = require("cheerio");
             jQuery = require("cheerio");
             $ = require("cheerio");
             _ = require("underscore");
@@ -3540,6 +3539,8 @@
    *
    */
     var rmp = function(options) {
+        // Binded object
+        var _this = this;
         var pub = {};
         var priv = {};
         /* Search configuration */
@@ -3557,7 +3558,13 @@
             easiness: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(3) > div.rating",
             clarity: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(2) > div.rating",
             help: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(1) > div.rating",
-            university: "#mainContent > div.right-panel > div.top-info-block > div.result-info > div.result-title > h2 > a"
+            university: "#mainContent > div.right-panel > div.top-info-block > div.result-info > div.result-title > h2 > a",
+            // every comment
+            comments: "p.commentsParagraph",
+            // top tag of a professor
+            topTag: "#mainContent > div.right-panel > div.rating-breakdown > div.right-breakdown > div.tag-box > span:nth-child(1)",
+            // first tag of every comment
+            commentTags: "td.comments > div.tagbox > span:nth-child(1)"
         };
         /* Generates new query object */
         priv.newQuery = function(university, campus, name) {
@@ -3569,10 +3576,26 @@
                 name: name
             };
         };
+        /* Combines all properties of a string */
+        priv.combine = function(options) {
+            var query = "";
+            if (typeof options === "string") {
+                query = options;
+                return query;
+            } else if (typeof options === "object") {
+                $.each(options, function(key, val) {
+                    query += " ";
+                    query += val;
+                });
+                return query;
+            } else {
+                throw new Error("Please pass in a String name or object with correct property keys.");
+            }
+        };
         /* Generates a search URL for the professor */
-        priv.getSearchUrl = function(query) {
-            var campusSep = query.campus.length > 1 ? encodeURIComponent(" ") : "";
-            return "http://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=" + encodeURIComponent(query.university) + campusSep + encodeURIComponent(query.campus) + "&schoolID=4002&query=" + encodeURIComponent(query.name);
+        priv.getSearchUrl = function(options) {
+            var query = priv.combine(options);
+            return "http://www.ratemyprofessors.com/search.jsp?query=" + encodeURIComponent(priv.config.location) + encodeURIComponent(" ") + encodeURIComponent(query);
         };
         /* Validates constructor options & holds options as properties */
         priv.options = function(input) {
@@ -3629,10 +3652,16 @@
         priv.scrape = function(url, callback) {
             // Scrapes the data & calls callback with professor data
             var scrape = function(html, callback) {
+                // Page built from HTML string
                 var page = jQuery(html);
                 var comments = [];
+                var tags = [];
+                // Scrape all tags
+                $(priv.selectors.commentTags, page).each(function(indx, elem) {
+                    tags.push($(elem).text().trim());
+                });
                 // Scrape all comments
-                $("p.commentsParagraph", page).each(function(indx, elem) {
+                $(priv.selectors.comments, page).each(function(indx, elem) {
                     comments.push($(elem).text().trim());
                 });
                 // Create professor object
@@ -3644,10 +3673,12 @@
                     easiness: $(priv.selectors.easiness, page).text().trim(),
                     help: $(priv.selectors.help, page).text().trim(),
                     clarity: $(priv.selectors.clarity, page).text().trim(),
-                    comments: comments,
+                    topTag: $(priv.selectors.topTag, page).text().trim(),
                     grade: $(priv.selectors.grade, page).text().trim(),
                     university: $(priv.selectors.university, page).text().trim(),
-                    chili: $(priv.selectors.chili, page).attr("src").replace("/assets/chilis/", "").replace("-chili.png", "")
+                    chili: $(priv.selectors.chili, page).attr("src").replace("/assets/chilis/", "").replace("-chili.png", ""),
+                    tags: tags,
+                    comments: comments
                 };
                 if (typeof callback !== "function") {
                     throw new Error("No or invalid callback provided.");
@@ -3786,14 +3817,33 @@
             // Generate a query using the options
             var query = priv.getOptionsAsQuery(options);
             // Get the search URL
-            var searchUrl = priv.getSearchUrl(query);
+            var searchUrl = priv.getSearchUrl(options);
             // Let the hunt begin
             priv.search(query, searchUrl, callback);
         };
+        /* Get the context of the search */
+        pub.getContext = function() {
+            return priv.config.location;
+        };
+        // Initialize
+        priv.config.location = _this.context;
         // Validate input
         _.extend(priv.config, priv.options(options));
-        return _.extend(rmp, pub);
+        // Bind variable
+        var exportBind = {
+            context: pub.getContext()
+        };
+        // Bind context to function
+        var binded = _.bind(rmp, exportBind);
+        // Function + public properties
+        priv.export = _.extend(binded, pub);
+        // Export
+        return priv.export;
     };
+    // Initial bind of rmp
+    var rmp_export = _.bind(rmp, {
+        context: ""
+    });
     /**
    * Use to return to original 'rmp' variable
    *
@@ -3805,10 +3855,10 @@
     // EXPORT
     if (typeof exports !== "undefined") {
         if (typeof module !== "undefined" && module.exports) {
-            exports = module.exports = _.extend(rmp, rmp(""));
+            exports = module.exports = rmp_export("");
         }
-        exports.rmp = _.extend(rmp, rmp(""));
+        exports.rmp = rmp_export("");
     } else {
-        root.rmp = _.extend(rmp, rmp(""));
+        root.rmp = rmp_export("");
     }
 }).call(this);
