@@ -115,6 +115,20 @@ var pennState = rmp("Pennsylvania State University");
 pennState.get("Naseem Ibrahim", callback);
 ```
 
+**Instance chaining**
+
+```javascript
+var uc = rmp("University of California");
+var ucLA = uc("Los Angeles");
+// Los Angeles campus
+// then ucLA.get(...);
+```
+or
+```javascript
+var ucLA = rmp("University of California")("Los Angeles");
+// then ucLa.get(...);
+```
+
 Requesting professor
 
 **.get(fullName, callback)**
@@ -141,6 +155,15 @@ someUniv.get({ campus: "Some Campus", name: "First Last"}, callback);
 
 ##Example
 Checkout this [fiddle](https://jsfiddle.net/tnxbj112/5/).
+
+**Chaining**
+```javascript
+rmp("University Name").get("Professor Name", callback);
+
+rmp("University Name Campus Name").get("Professor Name", callback);
+
+rmp("University Name")("Campus Name").get("Professor Name", callback);
+```
 
 ##Sample Projects
 [PSU Rate My Professor Plugin](https://chrome.google.com/webstore/detail/psu-rate-my-professor-plu/mgcgmhhcjfknhchpfnkfhkoemaglookl?hl=en-US&gl=US&authuser=0)

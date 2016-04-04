@@ -22,6 +22,8 @@ var ps = rmp("Pennsylvania State University");
 
 // ps.get("Naseem Ibrahim", callback);
 
+rmp("Pennsylvania State University").get("Jalaa Hoblos", callback);
+
 ps.get("Meng Su", callback);
 
 ps.get("David Browm", callback);
