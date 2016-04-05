@@ -1,4 +1,4 @@
-/*! rmp-api - v0.1.0 - 2016-04-05 */
+/*! rmp-api - v0.1.1 - 2016-04-05 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
@@ -3589,9 +3589,9 @@
                 query = options;
                 return query;
             } else if (typeof options === "object") {
-                $.each(options, function(key, val) {
+                _.each(options, function(value, key, list) {
                     query += " ";
-                    query += val;
+                    query += value;
                 });
                 return query;
             } else {
@@ -3613,10 +3613,10 @@
                 return out;
             } else if (typeof input === "object") {
                 out.location = priv.config.location;
-                $.each(input, function(key, val) {
+                _.each(input, function(value, key, list) {
                     if (typeof val === "string") {
                         out.location += " ";
-                        out.location += val;
+                        out.location += value;
                     }
                 });
                 return out;

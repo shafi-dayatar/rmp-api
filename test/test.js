@@ -62,12 +62,70 @@ describe('rmp', function() {
         });
       });
     });
+    describe(".get({...}, callback);", function() {
+      it('should find Naseem Ibrahim', function(done) {
+        rmp.get({
+          name: "Naseem Ibrahim"
+        }, function(professor) {
+          expect(professor).to.not.be.null;
+          expect(professor.fname).to.equal("Naseem");
+          done();
+        });
+      });
+      it('should find Jalaa Hoblos at Penn State', function(done) {
+        rmp.get({
+          name: "Jalaa Hoblos",
+          uni: "Pennsylvania State University"
+        }, function(professor) {
+          expect(professor.fname).to.equal("Jalaa");
+          done();
+        });
+      });
+      it('should not find Jalaa Hoblos at Ohio State', function(done) {
+        rmp.get({
+          name: "Jalaa Hoblos",
+          uni: "Ohio State"
+        }, function(professor) {
+          expect(professor).to.be.null;
+          done();
+        });
+      });
+      it('should not find Richard Parry at Penn State', function(done) {
+        rmp.get({
+          name: "Richard Parry",
+          uni: "Pennsylvania State University"
+        }, function(professor) {
+          expect(professor).to.be.null;
+          done();
+        });
+      });
+      it('should not find Meng Su at Penn State Harrisburg', function(done) {
+        rmp.get({
+          name: "Meng Su",
+          uni: "Pennsylvania State University",
+          campus: "Harrisburg"
+        }, function(professor) {
+          expect(professor).to.be.null;
+          done();
+        });
+      });
+      it('should find Meng Su at Penn State Erie', function(done) {
+        rmp.get({
+          name: "Meng Su",
+          uni: "Pennsylvania State University",
+          campus: "Erie"
+        }, function(professor) {
+          expect(professor.fname).to.equal("Meng");
+          done();
+        });
+      });
+    });
   });
-  
+
   ///////////////////////
   // Instance creation //
   ///////////////////////
-  
+
   describe("pennState = rmp('Pennsylvania State University');", function() {
     var rmp = require("../src/main.js");
     var pennState = rmp("Pennsylvania State University");

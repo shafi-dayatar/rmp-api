@@ -22,9 +22,10 @@
     }
   }
 
+
   var root = this;
   var prevRmp = root.rmp;
-  
+
   /* Adding String.prototype.includes if it does not exist */
   if (typeof String.prototype.includes === "undefined") {
     String.prototype.includes = function(str2) {
@@ -82,9 +83,9 @@
         return query;
       }
       else if (typeof options === "object") {
-        $.each(options, function(key, val) {
+        _.each(options, function(value, key, list) {
           query += " ";
-          query += val;
+          query += value;
         });
         return query;
       }
@@ -111,10 +112,10 @@
       // if input is an object
       else if (typeof input === "object") {
         out.location = priv.config.location;
-        $.each(input, function(key, val) {
+        _.each(input, function(value, key, list) {
           if (typeof val === "string") {
             out.location += " ";
-            out.location += val;
+            out.location += value;
           }
         });
         return out;
@@ -351,7 +352,7 @@
     pub.getContext = function() {
       return priv.config.location;
     };
-    
+
     // Initialize
     priv.config.location = _this.context;
 
