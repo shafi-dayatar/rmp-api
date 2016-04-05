@@ -18,12 +18,14 @@ describe('rmp', function() {
 
   describe("get()", function() {
     it('should run the callback', function(done) {
+      this.timeout(5000);
       rmp.get("Naseem Ibrahim", function(professor) {
         expect(true).to.equal(true);
         done();
       });
     });
     it('should return null when not found', function(done) {
+      this.timeout(5000);
       var rmp = require("../src/main.js");
       rmp.get("hjkahdkad ajsdhakjdhj", function(professor) {
         expect(professor).to.be.null;
@@ -31,6 +33,7 @@ describe('rmp', function() {
       });
     });
     it('should find Richard Parry', function(done) {
+      this.timeout(5000);
       var rmp = require("../src/main.js");
       rmp.get("Richard Parry", function(professor) {
         expect(professor).to.not.be.null;
@@ -47,6 +50,7 @@ describe('rmp', function() {
         });
       });
       it('should have properties fname, lname, quality, grade, university, clarity, easiness', function(done) {
+        this.timeout(5000);
         var rmp = require("../src/main.js");
         rmp.get("Naseem Ibrahim", function(professor) {
           expect(professor).to.have.property('fname', "Naseem");
@@ -64,6 +68,7 @@ describe('rmp', function() {
     });
     describe(".get({...}, callback);", function() {
       it('should find Naseem Ibrahim', function(done) {
+        this.timeout(5000);
         rmp.get({
           name: "Naseem Ibrahim"
         }, function(professor) {
@@ -73,6 +78,7 @@ describe('rmp', function() {
         });
       });
       it('should find Jalaa Hoblos at Penn State', function(done) {
+        this.timeout(5000);
         rmp.get({
           name: "Jalaa Hoblos",
           uni: "Pennsylvania State University"
@@ -82,6 +88,7 @@ describe('rmp', function() {
         });
       });
       it('should not find Jalaa Hoblos at Ohio State', function(done) {
+        this.timeout(5000);
         rmp.get({
           name: "Jalaa Hoblos",
           uni: "Ohio State"
@@ -91,6 +98,7 @@ describe('rmp', function() {
         });
       });
       it('should not find Richard Parry at Penn State', function(done) {
+        this.timeout(5000);
         rmp.get({
           name: "Richard Parry",
           uni: "Pennsylvania State University"
@@ -100,6 +108,7 @@ describe('rmp', function() {
         });
       });
       it('should not find Meng Su at Penn State Harrisburg', function(done) {
+        this.timeout(5000);
         rmp.get({
           name: "Meng Su",
           uni: "Pennsylvania State University",
@@ -110,6 +119,7 @@ describe('rmp', function() {
         });
       });
       it('should find Meng Su at Penn State Erie', function(done) {
+        this.timeout(5000);
         rmp.get({
           name: "Meng Su",
           uni: "Pennsylvania State University",
@@ -144,6 +154,7 @@ describe('rmp', function() {
         });
       });
       it('should not find Richard Parry', function(done) {
+        this.timeout(5000);
         pennState.get("Richard Parry", function(professor) {
           expect(professor).to.be.null;
           done();
@@ -161,6 +172,7 @@ describe('rmp', function() {
       expect(erie.get).to.be.a("function");
     });
     it("should find Jalaa Hoblos", function(done) {
+      this.timeout(5000);
       erie.get("Jalaa Hoblos", function(professor) {
         expect(professor).to.not.be.null;
         expect(professor.fname).to.equal("Jalaa");
@@ -168,6 +180,7 @@ describe('rmp', function() {
       });
     });
     it("should not find Sukmoon Chang", function(done) {
+      this.timeout(5000);
       erie.get("Sukmoon Chang", function(professor) {
         expect(professor).to.be.null;
         done();
@@ -179,12 +192,14 @@ describe('rmp', function() {
       expect(rmp('Pennsylvania State University')('Harrisburg').get).to.be.a("function");
     });
     it("should not find Jalaa Hoblos", function(done) {
+      this.timeout(5000);
       rmp('Pennsylvania State University')('Harrisburg').get("Jalaa Hoblos", function(professor) {
         expect(professor).to.be.null;
         done();
       });
     });
     it("should find Sukmoon Chang", function(done) {
+      this.timeout(5000);
       rmp('Pennsylvania State University')('Harrisburg').get("Sukmoon Chang", function(professor) {
         expect(professor).to.not.be.null;
         expect(professor.fname).to.equal("Sukmoon");
