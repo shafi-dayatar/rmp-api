@@ -1,4 +1,4 @@
-/*! rmp-api - v0.1.0 - 2016-04-04 */
+/*! rmp-api - v0.1.0 - 2016-04-05 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
@@ -3534,6 +3534,12 @@
     }
     var root = this;
     var prevRmp = root.rmp;
+    /* Adding String.prototype.includes if it does not exist */
+    if (typeof String.prototype.includes === "undefined") {
+        String.prototype.includes = function(str2) {
+            return this.indexOf(str2) > -1;
+        };
+    }
     /**
    * rmp-api namespace
    *

@@ -24,6 +24,13 @@
 
   var root = this;
   var prevRmp = root.rmp;
+  
+  /* Adding String.prototype.includes if it does not exist */
+  if (typeof String.prototype.includes === "undefined") {
+    String.prototype.includes = function(str2) {
+      return this.indexOf(str2) > -1;
+    };
+  }
 
   /**
    * rmp-api namespace
