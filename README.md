@@ -1,7 +1,31 @@
 [![npm version](https://badge.fury.io/js/rmp-api.svg)](https://badge.fury.io/js/rmp-api)
 [![Build Status](https://travis-ci.org/awadYehya/rmp-api.svg?branch=master)](https://travis-ci.org/awadYehya/rmp-api)
 # rmp-api
-A RateMyProfessor scraper that pretends to be the RMP API
+A RateMyProfessor scraper that pretends to be the RMP API.
+
+##In a nutshell
+
+Get all the information you need with one line of code (and a callback...)
+
+```javascript
+var cb = function (prof) { /* .. do stuff with professor data .. */ };
+
+rmp.get("FirstName LastName", cb);
+```
+
+that's it.
+
+You can also make instances that only search within the domain of specific universities. 
+
+Let's make one for **University of Massachippissippi**
+
+```javascript
+var massachippissippi = rmp("University of Massachippissippi");
+```
+we can then use it as we would with ```rmp```
+```javascript
+massachippissippi.get("Negan Edwarrds", cb);
+```
 
 ##Installation
 

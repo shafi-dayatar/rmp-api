@@ -2,5 +2,4 @@
 src
 Gruntfile.js
 bower.json
-test
 release.sh
