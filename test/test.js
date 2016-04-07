@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var rmp = require("../index.js");
+var rmp = require("../src/main.js");
 
 describe('rmp', function() {
   // rmp

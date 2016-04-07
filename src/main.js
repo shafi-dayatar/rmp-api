@@ -179,23 +179,50 @@
           comments.push($(elem).text().trim());
         });
         // Create professor object
-        var professor = {
-          url: url,
-          fname: $(priv.selectors.fname, page).text().trim(),
-          lname: $(priv.selectors.lname, page).text().trim(),
-          quality: $(priv.selectors.quality, page).text().trim(),
-          easiness: $(priv.selectors.easiness, page).text().trim(),
-          help: $(priv.selectors.help, page).text().trim(),
-          clarity: $(priv.selectors.clarity, page).text().trim(),
-          topTag: $(priv.selectors.topTag, page).text().trim(),
-          grade: $(priv.selectors.grade, page).text().trim(),
-          university: $(priv.selectors.university, page).text().trim(),
-          chili: $(priv.selectors.chili, page).attr("src")
-            .replace("/assets/chilis/", "")
-            .replace("-chili.png", ""),
-          tags: tags,
-          comments: comments,
-        };
+        var professor = null;
+        try {
+          // Catch very rare error
+          if (typeof $(priv.selectors.chili, page).attr("src") === "undefined") {
+            throw new Error("Chili undefined. This is a rare error that " +
+            "happens for a few professors. Please help us out by providing " +
+            "the query you used with rmp-api.");
+          }
+          professor = {
+            url: url,
+            fname: $(priv.selectors.fname, page).text().trim(),
+            lname: $(priv.selectors.lname, page).text().trim(),
+            quality: $(priv.selectors.quality, page).text().trim(),
+            easiness: $(priv.selectors.easiness, page).text().trim(),
+            help: $(priv.selectors.help, page).text().trim(),
+            clarity: $(priv.selectors.clarity, page).text().trim(),
+            topTag: $(priv.selectors.topTag, page).text().trim(),
+            grade: $(priv.selectors.grade, page).text().trim(),
+            university: $(priv.selectors.university, page).text().trim(),
+            chili: $(priv.selectors.chili, page).attr("src")
+              .replace("/assets/chilis/", "")
+              .replace("-chili.png", ""),
+            tags: tags,
+            comments: comments,
+          };
+        }
+        catch (err) {
+          console.error(err);
+          professor = {
+            url: url,
+            fname: $(priv.selectors.fname, page).text().trim(),
+            lname: $(priv.selectors.lname, page).text().trim(),
+            quality: $(priv.selectors.quality, page).text().trim(),
+            easiness: $(priv.selectors.easiness, page).text().trim(),
+            help: $(priv.selectors.help, page).text().trim(),
+            clarity: $(priv.selectors.clarity, page).text().trim(),
+            topTag: $(priv.selectors.topTag, page).text().trim(),
+            grade: $(priv.selectors.grade, page).text().trim(),
+            university: $(priv.selectors.university, page).text().trim(),
+            chili: "cold", // fallback to cold - scraping this causes a strange error
+            tags: tags,
+            comments: comments,
+          };
+        }
         if (typeof callback !== "function") {
           throw new Error("No or invalid callback provided.");
         }
