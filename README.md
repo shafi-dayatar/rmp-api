@@ -3,6 +3,8 @@
 # rmp-api
 A RateMyProfessor scraper that pretends to be the RMP API.
 
+Try out the live demo [here](http://rmp-api-server.herokuapp.com/demo/index.html).
+
 ##In a nutshell
 
 Get all the information you need with one line of code (and a callback...)
