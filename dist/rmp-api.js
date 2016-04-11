@@ -1,4 +1,4 @@
-/*! rmp-api - v0.1.3 - 2016-04-07 */
+/*! rmp-api - v1.0.0 - 2016-04-09 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
