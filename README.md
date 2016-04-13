@@ -196,3 +196,8 @@ rmp("University Name")("Campus Name").get("Professor Name", callback);
 
 ##Sample Projects
 [PSU Rate My Professor Plugin](https://chrome.google.com/webstore/detail/psu-rate-my-professor-plu/mgcgmhhcjfknhchpfnkfhkoemaglookl?hl=en-US&gl=US&authuser=0)
+
+License
+
+Copyright (c) 2016 Yehya Awad
+rmp-api is free software, licensed under the MIT License, See the file LICENSE.md in this distribution for more details.
