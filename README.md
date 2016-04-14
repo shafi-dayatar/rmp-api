@@ -1,6 +1,6 @@
 [![npm version](https://badge.fury.io/js/rmp-api.svg)](https://badge.fury.io/js/rmp-api)
 [![bower version](https://img.shields.io/bower/v/rmp-api.svg?maxAge=2592000)](http://bower.io/search/?q=rmp-api)
-[![Build Status](https://travis-ci.org/awadYehya/rmp-api.svg?branch=master)](https://travis-ci.org/awadYehya/rmp-api)
+[![Build Status](https://travis-ci.org/yehya/rmp-api.svg?branch=master)](https://travis-ci.org/yehya/rmp-api)
 [![downloads](https://img.shields.io/npm/dm/rmp-api.svg?maxAge=2592000)](https://www.npmjs.com/package/rmp-api)
 
 # rmp-api
