@@ -49,7 +49,7 @@ describe('rmp', function() {
           done();
         });
       });
-      it('should have properties fname, lname, quality, grade, university, clarity, easiness', function(done) {
+      it('should have properties fname, lname, quality, grade, university, clarity, easiness, comments, courses', function(done) {
         this.timeout(5000);
         var rmp = require("../src/main.js");
         rmp.get("Naseem Ibrahim", function(professor) {
@@ -62,6 +62,9 @@ describe('rmp', function() {
           expect(professor.grade).to.be.a("string");
           expect(professor.clarity).to.be.a("string");
           expect(professor.easiness).to.be.a("string");
+          expect(professor.comments).to.be.a("array");
+          expect(professor.courses).to.be.a("array");
+          expect(professor.tags).to.be.a("array");
           done();
         });
       });

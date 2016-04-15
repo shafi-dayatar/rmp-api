@@ -1,4 +1,4 @@
-/*! rmp-api - v1.0.0 - 2016-04-09 */
+/*! rmp-api - v1.1.0 - 2016-04-15 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
@@ -3570,7 +3570,9 @@
             // top tag of a professor
             topTag: "#mainContent > div.right-panel > div.rating-breakdown > div.right-breakdown > div.tag-box > span:nth-child(1)",
             // first tag of every comment
-            commentTags: "td.comments > div.tagbox > span:nth-child(1)"
+            commentTags: "td.comments > div.tagbox > span:nth-child(1)",
+            // courses
+            courses: ".class > .name > .response"
         };
         /* Generates new query object */
         priv.newQuery = function(university, campus, name) {
@@ -3661,6 +3663,7 @@
                 // Page built from HTML string
                 var page = jQuery(html);
                 var comments = [];
+                var courses = [];
                 var tags = [];
                 // Scrape all tags
                 $(priv.selectors.commentTags, page).each(function(indx, elem) {
@@ -3669,6 +3672,10 @@
                 // Scrape all comments
                 $(priv.selectors.comments, page).each(function(indx, elem) {
                     comments.push($(elem).text().trim());
+                });
+                // Scrape all courses
+                $(priv.selectors.courses, page).each(function(indx, elem) {
+                    courses.push($(elem).text().trim());
                 });
                 // Create professor object
                 var professor = null;
@@ -3690,7 +3697,8 @@
                         university: $(priv.selectors.university, page).text().trim(),
                         chili: $(priv.selectors.chili, page).attr("src").replace("/assets/chilis/", "").replace("-chili.png", ""),
                         tags: tags,
-                        comments: comments
+                        comments: comments,
+                        courses: courses
                     };
                 } catch (err) {
                     console.error(err);
