@@ -65,7 +65,9 @@
       // first tag of every comment
       commentTags: "td.comments > div.tagbox > span:nth-child(1)",
       // courses
-      courses: ".class > .name > .response"
+      courses: ".class > .name > .response",
+      // course ratings
+      courseRatings: ".rating-type"
     };
     /* Generates new query object */
     priv.newQuery = function(university, campus, name) {
@@ -173,6 +175,7 @@
         var comments = [];
         var courses = [];
         var tags = [];
+        var courseRatings = [];
         // Scrape all tags
         $(priv.selectors.commentTags, page).each(function(indx, elem) {
           tags.push($(elem).text().trim());
@@ -185,14 +188,18 @@
         $(priv.selectors.courses, page).each(function(indx, elem) {
           courses.push($(elem).text().trim());
         });
+        // Scrape all courses
+        $(priv.selectors.courseRatings, page).each(function(indx, elem) {
+          courseRatings.push($(elem).text().trim().toUpperCase());
+        });
         // Create professor object
         var professor = null;
         try {
           // Catch very rare error
           if (typeof $(priv.selectors.chili, page).attr("src") === "undefined") {
             throw new Error("Chili undefined. This is a rare error that " +
-            "happens for a few professors. Please help us out by providing " +
-            "the query you used with rmp-api.");
+              "happens for a few professors. Please help us out by providing " +
+              "the query you used with rmp-api.");
           }
           professor = {
             url: url,
@@ -210,7 +217,8 @@
               .replace("-chili.png", ""),
             tags: tags,
             comments: comments,
-            courses: courses
+            courses: courses,
+            courseRatings: courseRatings
           };
         }
         catch (err) {

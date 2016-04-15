@@ -64,7 +64,17 @@ describe('rmp', function() {
           expect(professor.easiness).to.be.a("string");
           expect(professor.comments).to.be.a("array");
           expect(professor.courses).to.be.a("array");
+          expect(professor.courseRatings).to.be.a("array");
           expect(professor.tags).to.be.a("array");
+          done();
+        });
+      });
+      it('should have same number of comments, courses, and ratings', function(done) {
+        this.timeout(5000);
+        var rmp = require("../src/main.js");
+        rmp.get("Meng Su", function(professor) {
+          expect(professor.courses.length).to.be.equal(professor.courseRatings.length);
+          expect(professor.courseRatings.length).to.be.equal(professor.comments.length);
           done();
         });
       });
