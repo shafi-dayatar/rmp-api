@@ -1,4 +1,4 @@
-/*! rmp-api - v1.2.2 - 2016-04-27 */
+/*! rmp-api - v1.2.3 - 2016-04-27 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
@@ -3732,10 +3732,13 @@
                 names = name.split(",");
                 out.last = names[0].trim().toLowerCase();
                 out.first = names[1].trim().toLowerCase();
-            } else {
+            } else if (name.includes(" ")) {
                 names = name.split(" ");
                 out.first = names[0].trim().toLowerCase();
                 out.last = names[1].trim().toLowerCase();
+            } else {
+                out.first = name.trim().toLowerCase();
+                out.last = "";
             }
             out.full = out.first + out.last;
             return out;

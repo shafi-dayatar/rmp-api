@@ -144,6 +144,26 @@ describe('rmp', function() {
         });
       });
     });
+    describe("Searching professor with blank page", function() {
+      it("should not find Sunil Nair", function(done) {
+        this.timeout(5000);
+        var BC = rmp("Baruch College");
+        BC.get("Sunil Nair", function(professor) {
+          expect(professor).to.be.null;
+          done();
+        });
+      });
+    });
+    describe("Searching with only first name", function() {
+        it("should find John Pollard using only first name John to search", function(done) {
+            this.timeout(5000);
+            rmp.get("John", function (professor) {
+              expect(professor.fname).to.equal("John");
+              expect(professor.lname).to.equal("Pollard");
+              done();
+            });
+        })
+    })
   });
 
   ///////////////////////
@@ -218,17 +238,6 @@ describe('rmp', function() {
       rmp('Pennsylvania State University')('Harrisburg').get("Sukmoon Chang", function(professor) {
         expect(professor).to.not.be.null;
         expect(professor.fname).to.equal("Sukmoon");
-        done();
-      });
-    });
-  });
-
-  describe("Searching professor with blank page", function() {
-    it("should not find Sunil Nair", function(done) {
-      this.timeout(5000);
-      var BC = rmp("Baruch College");
-      BC.get("Sunil Nair", function(professor) {
-        expect(professor).to.be.null;
         done();
       });
     });
