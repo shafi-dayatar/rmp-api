@@ -43,6 +43,7 @@ describe('rmp', function() {
     });
     describe("get('Naseem Ibrahim',..)", function() {
       it('should find Naseem Ibrahim using no University', function(done) {
+        this.timeout(5000);
         var rmp = require("../src/main.js");
         rmp.get("Naseem Ibrahim", function(professor) {
           expect(professor.fname).to.equal("Naseem");
@@ -160,6 +161,7 @@ describe('rmp', function() {
     });
     describe(".get", function() {
       it("should find Meng Su", function(done) {
+        this.timeout(5000);
         pennState.get("Meng Su", function(professor) {
           expect(professor).to.not.be.null;
           expect(professor.fname).to.equal("Meng");
@@ -216,6 +218,17 @@ describe('rmp', function() {
       rmp('Pennsylvania State University')('Harrisburg').get("Sukmoon Chang", function(professor) {
         expect(professor).to.not.be.null;
         expect(professor.fname).to.equal("Sukmoon");
+        done();
+      });
+    });
+  });
+
+  describe("Searching professor with blank page", function() {
+    it("should not find Sunil Nair", function(done) {
+      this.timeout(5000);
+      var BC = rmp("Baruch College");
+      BC.get("Sunil Nair", function(professor) {
+        expect(professor).to.be.null;
         done();
       });
     });
