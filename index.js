@@ -1,4 +1,4 @@
-/*! rmp-api - v1.2.1 - 2016-04-15 */
+/*! rmp-api - v1.2.2 - 2016-04-27 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
@@ -3686,11 +3686,8 @@
                 });
                 // Create professor object
                 var professor = null;
-                try {
-                    // Catch very rare error
-                    if (typeof $(priv.selectors.chili, page).attr("src") === "undefined") {
-                        throw new Error("Chili undefined. This is a rare error that " + "happens for a few professors. Please help us out by providing " + "the query you used with rmp-api.");
-                    }
+                // If Valid professor page (not blank)
+                if (priv.isPageValid(page)) {
                     professor = {
                         url: url,
                         fname: $(priv.selectors.fname, page).text().trim(),
@@ -3708,25 +3705,8 @@
                         courses: courses,
                         courseRatings: courseRatings
                     };
-                } catch (err) {
-                    console.error(err);
-                    professor = {
-                        url: url,
-                        fname: $(priv.selectors.fname, page).text().trim(),
-                        lname: $(priv.selectors.lname, page).text().trim(),
-                        quality: $(priv.selectors.quality, page).text().trim(),
-                        easiness: $(priv.selectors.easiness, page).text().trim(),
-                        help: $(priv.selectors.help, page).text().trim(),
-                        clarity: $(priv.selectors.clarity, page).text().trim(),
-                        topTag: $(priv.selectors.topTag, page).text().trim(),
-                        grade: $(priv.selectors.grade, page).text().trim(),
-                        university: $(priv.selectors.university, page).text().trim(),
-                        chili: "cold",
-                        // fallback to cold - scraping this causes a strange error
-                        tags: tags,
-                        comments: comments
-                    };
                 }
+                // Check if callback valid
                 if (typeof callback !== "function") {
                     throw new Error("No or invalid callback provided.");
                 } else {
@@ -3737,6 +3717,11 @@
             priv.requestPage(url, function(respText) {
                 scrape(respText, callback);
             });
+        };
+        priv.isPageValid = function(page) {
+            var nameExists = $(priv.selectors.fname, page).text().trim() !== "";
+            var chiliExists = typeof $(priv.selectors.chili, page).attr("src") !== "undefined";
+            return nameExists && chiliExists;
         };
         /* Parses and Cleans up name from the RMP search */
         priv.parseName = function(name) {
