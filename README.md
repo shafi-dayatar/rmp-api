@@ -184,10 +184,39 @@ var someUniv = rmp("Some University");
 someUniv.get({ campus: "Some Campus", name: "First Last"}, callback);
 ```
 
+##Professor Object Structure
+```json
+{
+    "url": "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=14671241",
+    "fname": "Name",
+    "lname": "LastName",
+    "quality": "4.5",
+    "easiness": "3.0",
+    "help": "5.0",
+    "clarity": "4.0",
+    "topTag": "Gives Pop Quizzes (1)",
+    "grade": "B",
+    "university": "Pennsylvania State University - Erie",
+    "chili": "cold",
+    "tags": [
+        "TOUGH GRADER"
+    ],
+    "comments": [
+        "Tough test questions"
+    ],
+    "courses": [
+        "SWENG311"
+    ],
+    "courseRatings": [
+        "GOOD"
+    ]
+}
+```
+
 ##Example
 Checkout this [fiddle](https://jsfiddle.net/tnxbj112/5/).
 
-**Chaining**
+**More Chaining**
 ```javascript
 rmp("University Name").get("Professor Name", callback);
 
