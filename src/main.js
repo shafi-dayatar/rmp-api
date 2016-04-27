@@ -246,10 +246,13 @@
         out.last = names[0].trim().toLowerCase();
         out.first = names[1].trim().toLowerCase();
       }
-      else {
+      else if (name.includes(" ")) {
         names = name.split(" ");
         out.first = names[0].trim().toLowerCase();
         out.last = names[1].trim().toLowerCase();
+      } else {
+        out.first = name.trim().toLowerCase();
+        out.last = "";
       }
       out.full = out.first + out.last;
       return out;
