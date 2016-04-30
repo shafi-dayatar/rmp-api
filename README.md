@@ -226,10 +226,9 @@ rmp("University Name")("Campus Name").get("Professor Name", callback);
 ```
 
 ##Sample Projects
-[PSU Rate My Professor Plugin](https://chrome.google.com/webstore/detail/psu-rate-my-professor-plu/mgcgmhhcjfknhchpfnkfhkoemaglookl?hl=en-US&gl=US&authuser=0)
-
-<p align="center">
-  <img src="http://i.imgur.com/1lvHJTI.gif" width="80%">
+####[PSU Rate My Professor Plugin](https://chrome.google.com/webstore/detail/psu-rate-my-professor-plu/mgcgmhhcjfknhchpfnkfhkoemaglookl?hl=en-US&gl=US&authuser=0)
+<p align="left">
+  <img src="http://g.recordit.co/EtGA2HEsCe.gif" width="80%">
 </p>
 
 License
