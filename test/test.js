@@ -145,14 +145,15 @@ describe('rmp', function() {
       });
     });
     describe("Searching professor with blank page", function() {
-      it("should not find Sunil Nair", function(done) {
-        this.timeout(5000);
-        var BC = rmp("Baruch College");
-        BC.get("Sunil Nair", function(professor) {
-          expect(professor).to.be.null;
-          done();
-        });
-      });
+      // it("should not find Sunil Nair", function(done) {
+      //   this.timeout(5000);
+      //   var BC = rmp("Baruch College");
+      //   BC.get("Sunil Nair", function(professor) {
+      //     expect(professor).to.be.null;
+      //     done();
+      //   });
+      // });
+      // TODO Add new test here
     });
     describe("Searching with only first name", function() {
         it("should find John Pollard using only first name John to search", function(done) {
