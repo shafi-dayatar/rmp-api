@@ -50,6 +50,7 @@ describe('rmp', function() {
           done();
         });
       });
+      // TODO add tests for values of properties
       it('should have properties fname, lname, quality, grade, university, clarity, easiness, comments, courses', function(done) {
         this.timeout(5000);
         var rmp = require("../src/main.js");

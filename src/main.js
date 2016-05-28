@@ -1,10 +1,10 @@
 /*global*/
 (function() {
 
-  /* Set true to print debug messages */
-  var DEBUG_MODE = false;
-
   "use strict";
+
+  /* Set true to print debug messages */
+  var DEBUG_MODE = true;
 
   var request,
     jQuery = this.jQuery,
@@ -23,7 +23,6 @@
       _ = require("underscore");
     }
   }
-
 
   var root = this;
   var prevRmp = root.rmp;
@@ -245,7 +244,7 @@
     priv.isPageValid = function(page) {
       var nameExists = $(priv.selectors.fname, page).text().trim() !== "";
       var chiliExists = typeof $(priv.selectors.chili, page).attr("src") !== "undefined";
-      debugLog("priv.isPageValid: nameExists", nameExists );
+      debugLog("priv.isPageValid: nameExists", nameExists);
       debugLog("priv.isPageValid: chiliExists", chiliExists);
       debugLog("priv.isPageValid", nameExists && chiliExists);
       return nameExists && chiliExists;
