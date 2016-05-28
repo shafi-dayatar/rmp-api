@@ -1,6 +1,9 @@
 /*global*/
 (function() {
 
+  /* Set true to print debug messages */
+  var DEBUG_MODE = false;
+
   "use strict";
 
   var request,
@@ -32,6 +35,13 @@
     };
   }
 
+  /* Used to print debug messages in the console */
+  var debugLog = function(context, message) {
+    if (DEBUG_MODE) {
+      console.log(context + ": " + message);
+    }
+  };
+
   /**
    * rmp-api namespace
    *
@@ -50,12 +60,12 @@
       listing: ".listing.PROFESSOR",
       fname: "#mainContent > div.right-panel > div.top-info-block > div.result-info > div.result-name > h1 > span:nth-child(1)",
       lname: "#mainContent > div.right-panel > div.top-info-block > div.result-info > div.result-name > h1 > span.plname",
-      quality: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.breakdown-wrapper > div:nth-child(1) > div",
-      grade: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.breakdown-wrapper > div:nth-child(2) > div",
-      chili: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.breakdown-wrapper > div:nth-child(3) > div > figure > img",
-      easiness: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(3) > div.rating",
+      quality: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div > div:nth-child(1) > div > div > div",
+      grade: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div > div:nth-child(2) > div:nth-child(2) > div",
+      chili: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div > div:nth-child(2) > div:nth-child(3) > div > figure > img",
+      easiness: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div > div:nth-child(2) > div:nth-child(2) > div",
       clarity: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(2) > div.rating",
-      help: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(1) > div.rating",
+      help: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div > div:nth-child(2) > div:nth-child(2) > div",
       university: "#mainContent > div.right-panel > div.top-info-block > div.result-info > div.result-title > h2 > a",
       // every comment
       comments: "p.commentsParagraph",
@@ -231,9 +241,13 @@
         scrape(respText, callback);
       });
     };
+    /* Checks if a professor page is valid (a.k.a. contains actual data) */
     priv.isPageValid = function(page) {
       var nameExists = $(priv.selectors.fname, page).text().trim() !== "";
       var chiliExists = typeof $(priv.selectors.chili, page).attr("src") !== "undefined";
+      debugLog("priv.isPageValid: nameExists", nameExists );
+      debugLog("priv.isPageValid: chiliExists", chiliExists);
+      debugLog("priv.isPageValid", nameExists && chiliExists);
       return nameExists && chiliExists;
     };
     /* Parses and Cleans up name from the RMP search */
@@ -250,7 +264,8 @@
         names = name.split(" ");
         out.first = names[0].trim().toLowerCase();
         out.last = names[1].trim().toLowerCase();
-      } else {
+      }
+      else {
         out.first = name.trim().toLowerCase();
         out.last = "";
       }
