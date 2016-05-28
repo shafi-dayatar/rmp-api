@@ -1,4 +1,4 @@
-/*! rmp-api - v1.2.4 - 2016-05-28 */
+/*! rmp-api - v1.2.5 - 2016-05-28 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
@@ -3570,7 +3570,7 @@
             grade: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div > div:nth-child(2) > div:nth-child(2) > div",
             chili: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div > div:nth-child(2) > div:nth-child(3) > div > figure > img",
             easiness: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div > div:nth-child(2) > div:nth-child(2) > div",
-            clarity: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div.faux-slides > div:nth-child(2) > div.rating",
+            clarity: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div > div:nth-child(2) > div:nth-child(2) > div",
             help: "#mainContent > div.right-panel > div.rating-breakdown > div.left-breakdown > div > div:nth-child(2) > div:nth-child(2) > div",
             university: "#mainContent > div.right-panel > div.top-info-block > div.result-info > div.result-title > h2 > a",
             // every comment
