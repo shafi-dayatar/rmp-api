@@ -1,4 +1,4 @@
-/*! rmp-api - v1.2.3 - 2016-05-28 */
+/*! rmp-api - v1.2.4 - 2016-05-28 */
 /* GitHub https://github.com/awadYehya/rmp-api#readme */
 /* Copyright 2016 (C) Yehya Awad */
 
@@ -3520,7 +3520,7 @@
 (function() {
     "use strict";
     /* Set true to print debug messages */
-    var DEBUG_MODE = true;
+    var DEBUG_MODE = false;
     var request, jQuery = this.jQuery, $ = this.$, _ = this._;
     /* Check for Node.js */
     var IS_NODE = false;
