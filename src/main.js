@@ -4,7 +4,7 @@
   "use strict";
 
   /* Set true to print debug messages */
-  var DEBUG_MODE = true;
+  var DEBUG_MODE = false;
 
   var request,
     jQuery = this.jQuery,
