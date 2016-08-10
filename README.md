@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/yehya/rmp-api.svg?branch=master)](https://travis-ci.org/yehya/rmp-api)
 [![downloads](https://img.shields.io/npm/dm/rmp-api.svg?maxAge=259200)](https://www.npmjs.com/package/rmp-api)
 
+# AS OF 08/08/2016 IT ONLY WORKS ON *NODE.JS*, TO MAKE IT WORK ON THE CLIENT SIDE YOU WILL NEED TO BYPASS CORS USING A PROXY SERVER
+
 # rmp-api
 A RateMyProfessor scraper that pretends to be the RMP API.
 
